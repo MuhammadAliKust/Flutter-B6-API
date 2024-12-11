@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_b6_api/providers/user_provider.dart';
+import 'package:flutter_b6_api/views/create_task.dart';
+import 'package:flutter_b6_api/views/get_all_task.dart';
 import 'package:provider/provider.dart';
 
 class ProfileView extends StatelessWidget {
@@ -11,6 +13,21 @@ class ProfileView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => GetAllTask()));
+              },
+              icon: Icon(Icons.task))
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CreateTaskView()));
+        },
+        child: Icon(Icons.add),
       ),
       body: Column(
         children: [

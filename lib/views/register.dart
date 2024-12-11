@@ -26,7 +26,7 @@ class _RegisterViewState extends State<RegisterView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Register"),
+        title: const Text("Register"),
       ),
       body: Column(
         children: [
@@ -39,28 +39,28 @@ class _RegisterViewState extends State<RegisterView> {
           TextField(
             controller: pwdController,
           ),
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           isLoading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(),
                 )
               : ElevatedButton(
                   onPressed: () async {
                     if (nameController.text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Name cannot be empty.")));
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("Name cannot be empty.")));
                       return;
                     }
                     if (emailController.text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Email cannot be empty.")));
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("Email cannot be empty.")));
                       return;
                     }
                     if (pwdController.text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Password cannot be empty.")));
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("Password cannot be empty.")));
                       return;
                     }
                     try {
@@ -86,7 +86,7 @@ class _RegisterViewState extends State<RegisterView> {
                           .showSnackBar(SnackBar(content: Text(e.toString())));
                     }
                   },
-                  child: Text("Register"))
+                  child: const Text("Register"))
         ],
       ),
     );
