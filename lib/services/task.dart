@@ -32,4 +32,44 @@ class TaskServices {
       throw response.reasonPhrase.toString();
     }
   }
+
+  ///Get Completed Task
+  Future<TaskListModel> getCompletedTask(String token) async {
+    http.Response response = await http.get(
+        Uri.parse('$baseUrl/todos/completed'),
+        headers: {'Authorization': token});
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return TaskListModel.fromJson(jsonDecode(response.body));
+    } else {
+      throw response.reasonPhrase.toString();
+    }
+  }
+
+  ///Get InCompleted Task
+  Future<TaskListModel> getInCompletedTask(String token) async {
+    http.Response response = await http.get(
+        Uri.parse('$baseUrl/todos/incomplete'),
+        headers: {'Authorization': token});
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return TaskListModel.fromJson(jsonDecode(response.body));
+    } else {
+      throw response.reasonPhrase.toString();
+    }
+  }
+
+  ///Search Task
+  Future<TaskListModel> searchTask(
+      {required String token, required String searchKey}) async {
+    http.Response response = await http.get(
+        Uri.parse('$baseUrl/todos/search?keywords=$searchKey'),
+        headers: {'Authorization': token});
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return TaskListModel.fromJson(jsonDecode(response.body));
+    } else {
+      throw response.reasonPhrase.toString();
+    }
+  }
 }
