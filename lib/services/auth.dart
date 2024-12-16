@@ -13,15 +13,20 @@ class AuthServices {
       {required String email,
       required String name,
       required String password}) async {
-    http.Response response = await http.post(
-        Uri.parse('$baseUrl/users/register'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({"name": name, "email": email, "password": password}));
+    try {
+      http.Response response = await http.post(
+          Uri.parse('$baseUrl/users/register'),
+          headers: {'Content-Type': 'application/json'},
+          body:
+              jsonEncode({"name": name, "email": email, "password": password}));
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return RegisterResponseModel.fromJson(jsonDecode(response.body));
-    } else {
-      throw response.reasonPhrase.toString();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return RegisterResponseModel.fromJson(jsonDecode(response.body));
+      } else {
+        throw response.reasonPhrase.toString();
+      }
+    } catch (e) {
+      throw e.toString();
     }
   }
 
