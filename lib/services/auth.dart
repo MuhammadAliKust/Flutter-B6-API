@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_b6_api/models/login.dart';
 import 'package:flutter_b6_api/models/register.dart';
@@ -25,6 +27,12 @@ class AuthServices {
       } else {
         throw response.reasonPhrase.toString();
       }
+    } on HttpException {
+      throw "It seems our servers or not working. Please try again later.";
+    } on SocketException {
+      throw "It seems you are not connected to the internet. Please check your internet connection and try again.";
+    } on TimeoutException {
+      throw "It seems our servers are taking longer than usual. Please try again later.";
     } catch (e) {
       throw e.toString();
     }
@@ -33,14 +41,25 @@ class AuthServices {
   ///Login User
   Future<LoginResponseModel> loginUser(
       {required String email, required String password}) async {
-    http.Response response = await http.post(Uri.parse('$baseUrl/users/login'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({"email": email, "password": password}));
+    try {
+      http.Response response = await http.post(
+          Uri.parse('$baseUrl/users/login'),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({"email": email, "password": password}));
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return LoginResponseModel.fromJson(jsonDecode(response.body));
-    } else {
-      throw response.reasonPhrase.toString();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return LoginResponseModel.fromJson(jsonDecode(response.body));
+      } else {
+        throw response.reasonPhrase.toString();
+      }
+    } on HttpException {
+      throw "It seems our servers or not working. Please try again later.";
+    } on SocketException {
+      throw "It seems you are not connected to the internet. Please check your internet connection and try again.";
+    } on TimeoutException {
+      throw "It seems our servers are taking longer than usual. Please try again later.";
+    } catch (e) {
+      throw e.toString();
     }
   }
 
